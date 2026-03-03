@@ -20,7 +20,6 @@ public class BaseTest {
         webDriver.manage().window().maximize();
         pageProvider = new PageProvider(webDriver);
     }
-
     @After
     public void tearDown() {
         if (webDriver != null) {

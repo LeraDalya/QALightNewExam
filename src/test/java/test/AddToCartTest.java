@@ -1,4 +1,5 @@
-import baseTest.BaseTest;
+package test;
+
 import libs.PageProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
@@ -9,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pages.HomePage;
 import pages.ProductPage;
 
-public class AddToCartTest extends BaseTest {
+public class AddToCartTest {
 
     private WebDriver driver;
     private PageProvider pageProvider;
