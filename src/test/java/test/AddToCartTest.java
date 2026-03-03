@@ -1,4 +1,5 @@
-import baseTest.BaseTest;
+package test;
+
 import libs.PageProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
