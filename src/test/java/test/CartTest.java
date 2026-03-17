@@ -1,14 +1,16 @@
 package test;
 
-import baseTest.BaseTest;
 import org.junit.Test;
+import pages.CartPage;
 import pages.HomePage;
 import pages.ProductPage;
+import baseTest.BaseTest;
 
-public class AddToCartTest extends BaseTest {
+public class CartTest extends BaseTest {
 
     @Test
-    public void addProductToCartTest() {
+    public void openCartTest() {
+
         HomePage homePage = pageProvider.getHomePage();
         homePage.openPromoCategory();
         homePage.clickFirstProduct();
@@ -16,6 +18,8 @@ public class AddToCartTest extends BaseTest {
         ProductPage productPage = pageProvider.getProductPage();
         productPage.clickAddToCartButton();
 
-        productPage.verifyProductAddedToCart();
+        CartPage cartPage = pageProvider.getCartPage();
+        cartPage.openCart();
+        cartPage.verifyCartPageOpened();
     }
 }
