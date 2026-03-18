@@ -1,55 +1,55 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class HomePage {
-
-    private WebDriver webDriver;
-    private WebDriverWait wait;
-
-    private By firstProductLocator = By.xpath("//span[@title='51 ніжний тюльпан']");
-
-    private By searchButtonLocator = By.xpath("//button[contains(@class,'search')]");
+public class HomePage extends BasePage {
 
     public HomePage(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        super(webDriver);
+    }
+
+    private String BASE_URL = "https://flowers.ua";
+
+    private By promoCategory = By.xpath("//a[@title='Акційні букети']");
+    private By firstProduct = By.xpath("//span[@title='Букет \"Attraction of Love\"']");
+    private By promoTitle = By.xpath("//h1"); // заголовок сторінки
+    private By searchInput = By.xpath("//input[@type='search']");
+    private By searchButton = By.xpath("//button[contains(@class,'search')]");
+    private By noResultsText = By.xpath("//*[contains(text(),'нічого не знайдено') or contains(text(),'Нічого не знайдено')]");
+
+    public void openHomePage() {
+        openUrl(BASE_URL);
     }
 
     public void openPromoCategory() {
-        webDriver.get("https://flowers.ua/ua/promo");
+        webDriver.get(BASE_URL + "/ua/promo");
     }
 
     public void clickFirstProduct() {
-        WebElement product = wait.until(
-                ExpectedConditions.elementToBeClickable(firstProductLocator)
-        );
-        product.click();
+        webDriver.findElement(firstProduct).click();
     }
 
-    public void clickSearchButtonIfExists() {
-        if (!webDriver.findElements(searchButtonLocator).isEmpty()) {
-            try {
-                WebElement searchButton = wait.until(
-                        ExpectedConditions.elementToBeClickable(searchButtonLocator)
-                );
-                searchButton.click();
-            } catch (Exception e) {
-                WebElement searchButton = webDriver.findElement(searchButtonLocator);
-                ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", searchButton);
-            }
-        }
+    public boolean isPromoPageOpened() {
+        return webDriver.findElement(promoTitle).isDisplayed();
     }
 
-    public void open() {
-        String url = "https://flowers.ua/ua/promo";
-        webDriver.get(url);
+    public void searchForProduct(String text) {
+
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput)).sendKeys(text);
+
+        webDriver.findElement(searchInput).sendKeys(Keys.ENTER);
     }
+
+    public boolean isNoResultsMessageDisplayed() {
+        return webDriver.getPageSource().toLowerCase().contains("не знайдено");
+    }
+
 }

@@ -5,7 +5,7 @@ import pages.*;
 
 public class PageProvider {
 
-    private WebDriver webDriver; // драйвер
+    WebDriver webDriver;
 
     public PageProvider(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -15,8 +15,8 @@ public class PageProvider {
         return new HomePage(webDriver);
     }
 
-    public SearchResultPage getSearchResultPage() {
-        return new SearchResultPage(webDriver);
+    public BasePage getSearchResultPage() {
+        return new BasePage(webDriver);
     }
 
     public ProductPage getProductPage() {
@@ -27,3 +27,4 @@ public class PageProvider {
         return new CartPage(webDriver);
     }
 }
+
